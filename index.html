@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATANG LAWIN</title>
+    <title>CCTV NI KUWAN</title>
     <style>
          body {
          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -72,17 +72,6 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        #addTimeBtn {
-            position: fixed;
-            bottom: 100px;
-            right: 32px;
-            padding: 20px 30px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
         #plusButton:hover {
             background-color: #0056b3;
         }
@@ -100,33 +89,41 @@
 </head>
 <body>
     <label for="numberInput" style="color: #007bff; margin-left: 22px;">Land number:</label>
-    <input type="number" id="numberInput" name="numberInput" style="width: 100px;" onkeypress="handleKeyPress(event)">
+    <input type="number" id="numberInput" name="numberInput" style="width: 100px;" onkeypress="handleKeyPress(event)" oninput="validateInput(this)">
     <button onclick="changeSrc()">Search</button>
     <div class="iframe-row">
         <div class="iframe-container">
             <label class="iframe-label" id="label1">1</label>
-            <iframe id="embeddedFrame" src="https://play.pixels.xyz/pixels/share/1" width="650" height="500" frameborder="0"></iframe>
+            <iframe id="embeddedFrame" src="https://play.pixels.xyz/pixels/share/1" frameborder="0"></iframe>
         </div>
         <div class="iframe-container">
             <label class="iframe-label" id="label2">2</label>
-            <iframe id="embeddedFrame2" src="https://play.pixels.xyz/pixels/share/2" width="650" height="500" frameborder="0"></iframe>
+            <iframe id="embeddedFrame2" src="https://play.pixels.xyz/pixels/share/2" frameborder="0"></iframe>
         </div>
     </div>
     <div class="iframe-row">
         <div class="iframe-container2">
             <label class="iframe-label" id="label3">3</label>
-            <iframe id="embeddedFrame3" src="https://play.pixels.xyz/pixels/share/3" width="650" height="500" frameborder="0"></iframe>
+            <iframe id="embeddedFrame3" src="https://play.pixels.xyz/pixels/share/3" frameborder="0"></iframe>
         </div>
         <div class="iframe-container2">
             <label class="iframe-label" id="label4">4</label>
-            <iframe id="embeddedFrame4" src="https://play.pixels.xyz/pixels/share/4" width="650" height="500" frameborder="0"></iframe>
+            <iframe id="embeddedFrame4" src="https://play.pixels.xyz/pixels/share/4" frameborder="0"></iframe>
         </div>
     </div>
     <button id="previousbtn" onclick="decrementByThree()">PREVIOUS</button>
     <button id="nextbtn" onclick="incrementByThree()">NEXT</button>
-    <div id="credits">Credits: This page is created by MetaX</div>
+    <div id="credits">Credits: This page is created by KUWAN</div>
 
     <script>
+
+        function validateInput(input) {
+         var value = parseInt(input.value);
+          if (isNaN(value) || value < 0 || value > 5000) {
+          input.value = ''; // Clear the input if it's not within the valid range
+         }
+        }
+
 
         function handleKeyPress(event) {
             if (event.keyCode === 13) {
