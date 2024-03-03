@@ -3,10 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embedded Page</title>
+    <title>MATANG LAWIN</title>
+    <style>
+         body {
+         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+         background-color: #000000;
+         }
+        
+        .iframe-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 50px;
+        }
+        .iframe-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .iframe-container iframe {
+            margin-bottom: -40px;
+        }
+        .iframe-container2 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .iframe-container2 iframe {
+            margin-bottom: 50px;
+        }
+        .iframe-label {
+            font-weight: bold;
+            font-size: 24px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin-bottom: 5px;
+            margin-left: -600px;
+            color: #007bff;
+        }
+        #previousbtn {
+            position: fixed;
+            bottom: 40px;
+            right: 1250px;
+            padding: 20px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #nextbtn {
+            position: fixed;
+            bottom: 40px;
+            right: 32px;
+            padding: 20px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #addTimeBtn {
+            position: fixed;
+            bottom: 100px;
+            right: 32px;
+            padding: 20px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #plusButton:hover {
+            background-color: #0056b3;
+        }
+        #credits {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #554a4a;
+            color: rgb(49, 190, 46);
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Embedded Page</h2>
-    <iframe src="https://play.pixels.xyz/pixels/share/1604" width="800" height="600" frameborder="0"></iframe>
+    <label for="numberInput" style="color: #007bff; margin-left: 22px;">Land number:</label>
+    <input type="number" id="numberInput" name="numberInput" style="width: 100px;" onkeypress="handleKeyPress(event)">
+    <button onclick="changeSrc()">Search</button>
+    <div class="iframe-row">
+        <div class="iframe-container">
+            <label class="iframe-label" id="label1">1</label>
+            <iframe id="embeddedFrame" src="https://play.pixels.xyz/pixels/share/1" width="650" height="500" frameborder="0"></iframe>
+        </div>
+        <div class="iframe-container">
+            <label class="iframe-label" id="label2">2</label>
+            <iframe id="embeddedFrame2" src="https://play.pixels.xyz/pixels/share/2" width="650" height="500" frameborder="0"></iframe>
+        </div>
+    </div>
+    <div class="iframe-row">
+        <div class="iframe-container2">
+            <label class="iframe-label" id="label3">3</label>
+            <iframe id="embeddedFrame3" src="https://play.pixels.xyz/pixels/share/3" width="650" height="500" frameborder="0"></iframe>
+        </div>
+        <div class="iframe-container2">
+            <label class="iframe-label" id="label4">4</label>
+            <iframe id="embeddedFrame4" src="https://play.pixels.xyz/pixels/share/4" width="650" height="500" frameborder="0"></iframe>
+        </div>
+    </div>
+    <button id="previousbtn" onclick="decrementByThree()">PREVIOUS</button>
+    <button id="nextbtn" onclick="incrementByThree()">NEXT</button>
+    <div id="credits">Credits: This page is created by MetaX</div>
+
+    <script>
+
+        function handleKeyPress(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                changeSrc();
+            }
+        }
+
+        function changeSrc() {
+            var number = document.getElementById("numberInput").value;
+            var iframe = document.getElementById("embeddedFrame");
+            var iframe2 = document.getElementById("embeddedFrame2");
+            var iframe3 = document.getElementById("embeddedFrame3");
+            var iframe4 = document.getElementById("embeddedFrame4");
+            var src = iframe.src;
+            var parts = src.split("/");
+            parts[parts.length - 1] = number;
+            iframe.src = parts.join("/");
+            document.getElementById("label1").innerText = number;
+            
+            // Increment number for embeddedFrame2
+            var nextNumber2 = parseInt(number) + 1;
+            var parts2 = iframe2.src.split("/");
+            parts2[parts2.length - 1] = nextNumber2;
+            iframe2.src = parts2.join("/");
+            document.getElementById("label2").innerText = nextNumber2;
+
+            // Increment number for embeddedFrame3
+            var nextNumber3 = parseInt(number) + 2;
+            var parts3 = iframe3.src.split("/");
+            parts3[parts3.length - 1] = nextNumber3;
+            iframe3.src = parts3.join("/");
+            document.getElementById("label3").innerText = nextNumber3;
+
+            // Increment number for embeddedFrame4
+            var nextNumber4 = parseInt(number) + 3;
+            var parts4 = iframe4.src.split("/");
+            parts4[parts4.length - 1] = nextNumber4;
+            iframe4.src = parts4.join("/");
+            document.getElementById("label4").innerText = nextNumber4;
+        }
+
+        function incrementByThree() {
+            var iframeSrc = document.getElementById("embeddedFrame").src;
+            var lastNumber = parseInt(iframeSrc.split("/").pop());
+            var newNumber = lastNumber + 4;
+            document.getElementById("numberInput").value = newNumber;
+            changeSrc();
+            window.scrollTo(0, 0); // Scroll to the top of the page
+        } 
+        function decrementByThree() {
+            var iframeSrc = document.getElementById("embeddedFrame").src;
+            var lastNumber = parseInt(iframeSrc.split("/").pop());
+            var newNumber = lastNumber - 4;
+            document.getElementById("numberInput").value = newNumber;
+            changeSrc();
+            window.scrollTo(0, 0); // Scroll to the top of the page
+        }
+
+    </script>
 </body>
 </html>
