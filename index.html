@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Critter's Eye</title>
+    <title>CCTV NI KUWAN</title>
     <style>
          body {
          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -113,25 +113,24 @@
     </div>
     <button id="previousbtn" onclick="decrementByThree()">PREVIOUS</button>
     <button id="nextbtn" onclick="incrementByThree()">NEXT</button>
-    <div id="credits">Credits: This page is created by MetaX</div>
+    <div id="credits">Credits: This page is created by KUWAN</div>
 
     <script>
 
         function validateInput(input) {
-         var value = parseInt(input.value);
-          if (isNaN(value) || value < 0 || value > 5000) {
-          input.value = ''; // Clear the input if it's not within the valid range
-         }
+            var value = parseInt(input.value);
+            if (isNaN(value) || value < 0 || value > 5000) {
+                input.value = ''; // Clear the input if it's not within the valid range
+            }
         }
-
-
+    
         function handleKeyPress(event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
                 changeSrc();
             }
         }
-
+    
         function changeSrc() {
             var number = document.getElementById("numberInput").value;
             var iframe = document.getElementById("embeddedFrame");
@@ -143,21 +142,21 @@
             parts[parts.length - 1] = number;
             iframe.src = parts.join("/");
             document.getElementById("label1").innerText = number;
-            
+    
             // Increment number for embeddedFrame2
             var nextNumber2 = parseInt(number) + 1;
             var parts2 = iframe2.src.split("/");
             parts2[parts2.length - 1] = nextNumber2;
             iframe2.src = parts2.join("/");
             document.getElementById("label2").innerText = nextNumber2;
-
+    
             // Increment number for embeddedFrame3
             var nextNumber3 = parseInt(number) + 2;
             var parts3 = iframe3.src.split("/");
             parts3[parts3.length - 1] = nextNumber3;
             iframe3.src = parts3.join("/");
             document.getElementById("label3").innerText = nextNumber3;
-
+    
             // Increment number for embeddedFrame4
             var nextNumber4 = parseInt(number) + 3;
             var parts4 = iframe4.src.split("/");
@@ -165,7 +164,7 @@
             iframe4.src = parts4.join("/");
             document.getElementById("label4").innerText = nextNumber4;
         }
-
+    
         function incrementByThree() {
             var iframeSrc = document.getElementById("embeddedFrame").src;
             var lastNumber = parseInt(iframeSrc.split("/").pop());
@@ -173,7 +172,8 @@
             document.getElementById("numberInput").value = newNumber;
             changeSrc();
             window.scrollTo(0, 0); // Scroll to the top of the page
-        } 
+        }
+    
         function decrementByThree() {
             var iframeSrc = document.getElementById("embeddedFrame").src;
             var lastNumber = parseInt(iframeSrc.split("/").pop());
@@ -182,7 +182,37 @@
             changeSrc();
             window.scrollTo(0, 0); // Scroll to the top of the page
         }
-
+    
+        // Function to copy the text content of a label when clicked
+        function copyLabelText(labelId) {
+            var label = document.getElementById(labelId);
+            var textToCopy = label.innerText;
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                console.log('Copied to clipboard: ' + textToCopy);
+                //alert('Copied to clipboard: ' + textToCopy);
+            }, function(err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy to clipboard.');
+            });
+        }
+    
+        // Adding event listeners to each label
+        document.getElementById("label1").addEventListener("click", function() {
+            copyLabelText("label1");
+        });
+    
+        document.getElementById("label2").addEventListener("click", function() {
+            copyLabelText("label2");
+        });
+    
+        document.getElementById("label3").addEventListener("click", function() {
+            copyLabelText("label3");
+        });
+    
+        document.getElementById("label4").addEventListener("click", function() {
+            copyLabelText("label4");
+        });
     </script>
+    
 </body>
 </html>
