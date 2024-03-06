@@ -49,6 +49,7 @@
             font-size: 24px;
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             color: #007bff;
+            cursor: pointer;
         }
         #previousbtn {
             position: fixed;
@@ -78,42 +79,107 @@
         #credits {
             position: fixed;
             bottom: 0;
-            width: 100%;
+            width: 99%;
             background-color: #554a4a;
             color: rgb(49, 190, 46);
             text-align: center;
             padding: 10px 0;
             font-size: 14px;
+            border-radius: 5px;
         }
+        /* New styles for control panel */
+        .control-panel {
+            display: flex;
+            margin-bottom: 20px;
+            margin-left: 100px;
+        }
+        .control-panel label {
+            color: #007bff;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        .control-panel input[type="number"]{
+            margin-left: 10px;
+            padding: 10px 10px;
+            background-color: #28a745; /* Green color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: text;
+            transition: background-color 0.3s ease;
+        }
+        .control-panel button {
+            margin-left: 10px;
+            padding: 10px 10px;
+            background-color: #28a745; /* Green color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .control-panel input[type="number"]:focus,
+        .control-panel button:focus {
+            outline: none;
+        }
+        .control-panel button:hover {
+            background-color: #218838; /* Darker green color on hover */
+        }
+        /* Fox-themed welcome banner */
+        .welcome-banner {
+            background-color: #554a4a;
+            color: rgb(49, 190, 46);
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        ::placeholder{
+            color: rgb(112, 34, 34);
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
-    <label for="numberInput" style="color: #007bff; margin-left: 22px;">Land number:</label>
-    <input type="number" id="numberInput" name="numberInput" style="width: 100px;" onkeypress="handleKeyPress(event)" oninput="validateInput(this)">
-    <button onclick="changeSrc()">Search</button>
+    <!-- Fox-themed welcome banner -->
+    <div class="welcome-banner">
+        Welcome to Critter's Eye! Discover the world of critters with us.
+    </div>
+    <!-- New div for the control panel -->
+    <div class="control-panel">
+        <!-- <label for="numberInput">Land number:</label> -->
+        <input type="number" id="numberInput" name="numberInput" placeholder="LAND NUMBER" style="width: 115px;" onkeypress="handleKeyPress(event)" oninput="validateInput(this)">
+        <button onclick="changeSrc()">Search</button>
+        <button onclick="generateRandomNumber()">Random Land</button>
+        <button onclick="copyTime()">Get Current Time</button>
+    </div>
     <div class="iframe-row">
         <div class="iframe-container">
-            <label class="iframe-label" id="label1">1</label>
-            <iframe id="embeddedFrame" src="https://play.pixels.xyz/pixels/share/1" frameborder="0"></iframe>
+            <label class="iframe-label" id="label1">2314</label>
+            <iframe id="embeddedFrame" src="https://play.pixels.xyz/pixels/share/2314" frameborder="0"></iframe>
         </div>
         <div class="iframe-container">
-            <label class="iframe-label" id="label2">2</label>
-            <iframe id="embeddedFrame2" src="https://play.pixels.xyz/pixels/share/2" frameborder="0"></iframe>
+            <label class="iframe-label" id="label2">4869</label>
+            <iframe id="embeddedFrame2" src="https://play.pixels.xyz/pixels/share/4869" frameborder="0"></iframe>
         </div>
     </div>
     <div class="iframe-row">
         <div class="iframe-container2">
-            <label class="iframe-label" id="label3">3</label>
-            <iframe id="embeddedFrame3" src="https://play.pixels.xyz/pixels/share/3" frameborder="0"></iframe>
+            <label class="iframe-label" id="label3">2168</label>
+            <iframe id="embeddedFrame3" src="https://play.pixels.xyz/pixels/share/2168" frameborder="0"></iframe>
         </div>
         <div class="iframe-container2">
-            <label class="iframe-label" id="label4">4</label>
-            <iframe id="embeddedFrame4" src="https://play.pixels.xyz/pixels/share/4" frameborder="0"></iframe>
+            <label class="iframe-label" id="label4">289</label>
+            <iframe id="embeddedFrame4" src="https://play.pixels.xyz/pixels/share/289" frameborder="0"></iframe>
         </div>
     </div>
     <button id="previousbtn" onclick="decrementByThree()">PREVIOUS</button>
     <button id="nextbtn" onclick="incrementByThree()">NEXT</button>
-    <div id="credits">Credits: This page is created by MetaX</div>
+    <div id="credits">Join our guild: <a href="https://discord.gg/HTmcEyua" target="_blank" style="color: red;"> Critter Clubhouse</a></div>
+
 
     <script>
 
@@ -131,7 +197,9 @@
             }
         }
     
+        var prevnum;
         function changeSrc() {
+            prevnum = document.getElementById("label1").innerText;
             var number = document.getElementById("numberInput").value;
             var iframe = document.getElementById("embeddedFrame");
             var iframe2 = document.getElementById("embeddedFrame2");
@@ -177,19 +245,66 @@
         function decrementByThree() {
             var iframeSrc = document.getElementById("embeddedFrame").src;
             var lastNumber = parseInt(iframeSrc.split("/").pop());
-            var newNumber = lastNumber - 4;
+            var newNumber = prevnum;
             document.getElementById("numberInput").value = newNumber;
             changeSrc();
             window.scrollTo(0, 0); // Scroll to the top of the page
         }
+
+        function generateRandomNumber() {
+            var randomNumber = Math.floor(Math.random() * 5000) + 1;
+            document.getElementById("numberInput").value = randomNumber;
+            changeSrc();
+        }
     
+        function copyTextFallback(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed"; // Ensure the textarea is visible
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                var successful = document.execCommand('copy');
+                var message = successful ? 'successful' : 'unsuccessful';
+                console.log('Fallback: Copying text was ' + message);
+                if (successful) {
+                    alert('Current time copied to clipboard: ' + text);
+                } else {
+                    alert('Failed to copy current time to clipboard.');
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+                alert('Failed to copy current time to clipboard.');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+    
+        function copyTime() {
+            var now = new Date();
+            var formattedTime = now.toLocaleString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(formattedTime).then(function() {
+                    console.log('Copied to clipboard: ' + formattedTime);
+                    alert('Current time copied to clipboard: ' + formattedTime +'.');
+                }, function(err) {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy current time to clipboard.');
+                });
+            } else {
+                copyTextFallback(formattedTime);
+            }
+        }
+
         // Function to copy the text content of a label when clicked
         function copyLabelText(labelId) {
             var label = document.getElementById(labelId);
             var textToCopy = label.innerText;
             navigator.clipboard.writeText(textToCopy).then(function() {
                 console.log('Copied to clipboard: ' + textToCopy);
-                //alert('Copied to clipboard: ' + textToCopy);
+                alert('Land ' + textToCopy + ' has been copied.');
             }, function(err) {
                 console.error('Failed to copy: ', err);
                 alert('Failed to copy to clipboard.');
